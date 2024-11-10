@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib import admin
 from .models import Book  # Ensure that the Book model is imported
 
 # Define the BookAdmin class
