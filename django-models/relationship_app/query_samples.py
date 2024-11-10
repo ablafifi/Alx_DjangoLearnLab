@@ -1,28 +1,20 @@
-from relationship_app.models import Author, Book, Library, Librarian
+# Import Django models
+from .models import Author, Book, Library, Librarian
 
-# Query all books by a specific author
+# Query 1: Get all books by a specific author
 def get_books_by_author(author_name):
-    try:
-        author = Author.objects.get(name=author_name)
-        books = Book.objects.filter(author=author)
-        return books
-    except Author.DoesNotExist:
-        return None
+    author = Author.objects.get(name=author_name)
+    books = Book.objects.filter(author=author)
+    return books
 
-# List all books in a specific library
-def list_books_in_library(library_name):
-    try:
-        library = Library.objects.get(name=library_name)
-        books = library.books.all()
-        return books
-    except Library.DoesNotExist:
-        return None
+# Query 2: List all books in a specific library
+def get_books_in_library(library_name):
+    library = Library.objects.get(name=library_name)
+    books = library.books.all()  # Access related books via the ManyToManyField
+    return books
 
-# Retrieve the librarian for a specific library
+# Query 3: Retrieve the librarian for a given library
 def get_librarian_for_library(library_name):
-    try:
-        library = Library.objects.get(name=library_name)
-        librarian = library.librarian
-        return librarian
-    except (Library.DoesNotExist, Librarian.DoesNotExist):
-        return None
+    library = Library.objects.get(name=library_name)
+    librarian = Librarian.objects.get(library=library)  # Access the related librarian via the OneToOneField
+    return librarian
